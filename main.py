@@ -152,7 +152,7 @@ def toggle_favorite():
     else:
         print(f"'{p['title']}' 프롬프트를 즐겨찾기에서 해제했습니다!")
 
- def show_favorites():
+def show_favorites():
     print("\n=== 즐겨찾기 목록 ===")
     found = [p for p in prompts if p["favorite"]]
     if not found:
