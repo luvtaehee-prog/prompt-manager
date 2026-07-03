@@ -92,8 +92,27 @@ def show_by_category():
         star = " ⭐" if p["favorite"] else ""
         print(f"{i}. {p['title']}{star}")
     print(f"\n총 {len(found)}개의 프롬프트")
-    
 
+def search_prompt():
+    print("\n=== 프롬프트 검색 ===")
+    keyword = input("검색어: ").strip()
+    if not keyword:
+        print("검색어를 입력하세요.")
+        return
+
+    found = [p for p in prompts if keyword in p["title"] or keyword in p["content"]]
+
+    if not found:
+        print("\n검색 결과가 없습니다.")
+        return
+
+    print("\n검색 결과:")
+    for i, p in enumerate(found, 1):
+        star = " ⭐" if p["favorite"] else ""
+        print(f"{i}. [{p['category']}] {p['title']}{star}")
+    print(f"\n{len(found)}개의 프롬프트를 찾았습니다.")
+
+    
 def main():
     while True:
         show_menu()
