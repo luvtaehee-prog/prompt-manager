@@ -60,24 +60,6 @@ def show_menu():
     print("7. 즐겨찾기 목록")
     print("0. 종료")
 
-
-def main():
-    while True:
-        show_menu()
-        choice = input("선택: ").strip()
-        if choice == "0":
-            print("프로그램을 종료합니다.")
-            break
-        elif choice == "1":
-            add_prompt()
-        elif choice in ["2", "3", "4", "5", "6", "7"]:
-            print(f"[{choice}번] 기능은 아직 구현되지 않았습니다.")
-        else:
-            print("잘못된 입력입니다. 다시 선택하세요.")
-
-
-if __name__ == "__main__":
-    main()
 def show_list():
     print("\n=== 프롬프트 목록 ===")
     if not prompts:
@@ -88,9 +70,42 @@ def show_list():
         print(f"{i}. [{p['category']}] {p['title']}{star}")
     print(f"\n총 {len(prompts)}개의 프롬프트")
 
+def show_by_category():
+    print("\n=== 카테고리별 조회 ===")
+    for i, c in enumerate(CATEGORIES, 1):
+        print(f"{i}) {c}")
+    sel = input("선택: ").strip()
 
-    elif choice == "2":
+    if not (sel.isdigit() and 1 <= int(sel) <= len(CATEGORIES)):
+        print("잘못된 번호입니다.")
+        return
+
+    category = CATEGORIES[int(sel) - 1]
+    found = [p for p in prompts if p["category"] == category]
+
+    if not found:
+        print(f"\n[{category}] 카테고리에 프롬프트가 없습니다.")
+        return
+
+    print(f"\n[{category}] 카테고리 프롬프트:")
+    for i, p in enumerate(found, 1):
+        star = " ⭐" if p["favorite"] else ""
+        print(f"{i}. {p['title']}{star}")
+    print(f"\n총 {len(found)}개의 프롬프트")
+    
+
+def main():
+    while True:
+        show_menu()
+        choice = input("선택: ").strip()
+        if choice == "0":
+            print("프로그램을 종료합니다.")
+            break
+        elif choice == "1":
+            add_prompt()
+        elif choice == "2":
             show_list()
         elif choice in ["3", "4", "5", "6", "7"]:
             print(f"[{choice}번] 기능은 아직 구현되지 않았습니다.")
-    
+        else:
+            print("잘못된 입력입니다. 다시 선택하세요.")
