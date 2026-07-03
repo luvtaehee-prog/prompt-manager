@@ -19,6 +19,35 @@ prompts = [
         "favorite": False
     }
 ]
+def add_prompt():
+    print("\n=== 프롬프트 추가 ===")
+
+    title = input("제목: ").strip()
+    while not title:
+        title = input("제목을 입력하세요: ").strip()
+
+    content = input("내용: ").strip()
+    while not content:
+        content = input("내용을 입력하세요: ").strip()
+
+    print("\n카테고리 선택:")
+    for i, c in enumerate(CATEGORIES, 1):
+        print(f"{i}) {c}")
+    sel = input("선택: ").strip()
+
+    if sel.isdigit() and 1 <= int(sel) <= len(CATEGORIES):
+        category = CATEGORIES[int(sel) - 1]
+    else:
+        category = sel if sel else "기타"
+
+    prompts.append({
+        "title": title,
+        "content": content,
+        "category": category,
+        "favorite": False
+    })
+    print("\n프롬프트가 추가되었습니다!")
+
 
 def show_menu():
     print("\n=== 나만의 프롬프트 관리 ===")
@@ -39,7 +68,9 @@ def main():
         if choice == "0":
             print("프로그램을 종료합니다.")
             break
-        elif choice in ["1", "2", "3", "4", "5", "6", "7"]:
+        elif choice == "1":
+            add_prompt()
+        elif choice in ["2", "3", "4", "5", "6", "7"]:
             print(f"[{choice}번] 기능은 아직 구현되지 않았습니다.")
         else:
             print("잘못된 입력입니다. 다시 선택하세요.")
